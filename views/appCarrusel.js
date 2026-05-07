@@ -13,9 +13,15 @@ class methods {
             const e = await this.c.createElement('//android.view.ViewGroup[@content-desc="Skip"]/android.view.ViewGroup');
 
             if(await this.c.waitForElement(e, 50000)) {
+                const testDir = reportManager.getActualPath();
+                const screenshotName = `error_${Date.now()}.png`;
                 console.log('Se muestra el botón skip');
                 await this.c.clickOnElement(e);
-            } else {
+                const fullPath = path.join(testDir, screenshotName);
+                console.log(fullPath);
+                await this.driver.saveScreenshot(fullPath);
+                reportManager.addDetailedLog(context, "Se visualiza la pantalla de skip", screenshotName);
+                } else {
                 console.log('NO SE MUESTRA NADA');
             }
         } catch(err) {
@@ -33,7 +39,7 @@ class methods {
             const fullPath = path.join(testDir, screenshotName);
             console.log(fullPath);
             await this.driver.saveScreenshot(fullPath);
-            reportManager.addDetailedLog(context, "User Login", screenshotName);
+            reportManager.addDetailedLog(context, "Se visualiza la pantalla de login", screenshotName);
         } catch(err) {
             console.error("Error: ", err);
             throw err;
