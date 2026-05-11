@@ -21,6 +21,7 @@ class methods {
                 console.log(fullPath);
                 await this.driver.saveScreenshot(fullPath);
                 reportManager.addDetailedLog(context, "Se visualiza la pantalla de skip", screenshotName);
+                throw new Error('Fallo intencional');
                 } else {
                 console.log('NO SE MUESTRA NADA');
             }
