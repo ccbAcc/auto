@@ -1,6 +1,7 @@
 const { remote } = require('webdriverio');
 
-const client = {
+async function driver() {
+  return await remote({
       automationProtocol: 'webdriver',
       protocol: 'http',
       hostname: 'localhost',
@@ -16,11 +17,7 @@ const client = {
         "appium:gpsEnabled": true,
         "appium:locationServicesAuthorized": true
       }
-}
-
-
-async function driver() {
-  return await remote(client);
+  });
 }
 
 module.exports = driver;

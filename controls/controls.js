@@ -3,10 +3,6 @@ class controls {
   constructor(driver) {
     this.driver = driver;
   }
-
-  getdriver() {
-    return this.driver;
-  }
   
   async createElement(selector) {
     return await this.driver.$(selector);
@@ -15,6 +11,10 @@ class controls {
   async clickOnElement(e) {
     console.log("Se hace click en el elemento: ", e);
     await e.click();
+  }
+
+  async fillElement(e, value) {
+    await e.setValue(value);
   }
 
   async waitForElement(e, tm) {

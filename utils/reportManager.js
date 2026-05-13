@@ -6,7 +6,7 @@ require('dotenv').config();
 class TestReporter {
 
     static getActualPath() {
-        const screenshotPath = path.join(
+        this.screenshotPath = path.join(
             __dirname,
             '..',
             process.env.REPORT_DIR.split('/')[1],
@@ -14,11 +14,24 @@ class TestReporter {
             'assets'
         );
 
-        if(!fs.existsSync(screenshotPath)) {
-            fs.mkdirSync(screenshotPath, { recursive: true });
+        if(!fs.existsSync(this.screenshotPath)) {
+            fs.mkdirSync(this.screenshotPath, { recursive: true });
         }
-        
-        return screenshotPath;
+    }
+
+    static async takeScreenshot(driver, name) {
+        let screenshotName;
+
+        if(name.length === 0) {
+            screenshotName = `img_${Date.now()}.png`;
+        } else {
+            screenshotName = name + ".png";
+        }
+
+        console.log(this.screenshotPath);
+        let imgContext = path.join(this.screenshotPath, screenshotName);
+        await driver.saveScreenshot(imgContext);
+        return screenshotName;
     }
 
     static log(testContext, msg) {
