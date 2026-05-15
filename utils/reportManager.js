@@ -49,6 +49,10 @@ class TestReporter {
         this.log(testContext, `INFO : ${info}`);
         this.addScreenshot(testContext, screenshotName, `Evidencia : ${info}`);
     }
+
+    static addLog() {
+        
+    }
 }
 
 module.exports = TestReporter;

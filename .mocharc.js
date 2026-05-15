@@ -12,22 +12,8 @@ module.exports = {
         'json=true'
     ],
     spec : 'test/**/*.js',
-    timeout : 120000
+    timeout : 300000
 };
-
-function resultsDir() {
-     try {
-        if(fs.existsSync('./results')) {
-            console.log("Existe el directorio results");
-        }
-        else {
-            fs.mkdirSync('./results');
-            console.log("Se creó el directorio results");
-        }
-    } catch(err) {
-        console.error('Error en la creación de la carpeta: ', err);
-    }
-}
 
 function testRunDir() {
     try {
@@ -48,3 +34,19 @@ function testRunDir() {
         console.error('Error en la creación de la carpeta: ', err);
     }
 }
+
+/*
+function resultsDir() {
+     try {
+        if(fs.existsSync('./results')) {
+            console.log("Existe el directorio results");
+        }
+        else {
+            fs.mkdirSync('./results');
+            console.log("Se creó el directorio results");
+        }
+    } catch(err) {
+        console.error('Error en la creación de la carpeta: ', err);
+    }
+}
+*/

@@ -1,6 +1,7 @@
 const client = require('../utils/client');
 const controls = require('../controls/controls');
 const reportManager = require('../utils/reportManager');
+require('dotenv').config();
 
 describe('login',async function () {
 
@@ -56,8 +57,8 @@ describe('login',async function () {
             const consentTwo = await ctrl.createElement('//android.view.ViewGroup[@content-desc="Enter your credentials to log in"]/android.view.ViewGroup[6]');
             const signInButton = await ctrl.createElement('//android.view.ViewGroup[@content-desc="Sign In"]');
         
-            await ctrl.fillElement(userInput, 'tomyee101');
-            await ctrl.fillElement(passwordInput, 'Ftolb123');
+            await ctrl.fillElement(userInput, process.env.CCB_USERNAME);
+            await ctrl.fillElement(passwordInput, process.env.CCB_PASSWORD);
             await ctrl.clickOnElement(consentOne);
             await ctrl.clickOnElement(consentTwo); 
             await ctrl.clickOnElement(viewPassword);
@@ -83,5 +84,59 @@ describe('login',async function () {
             reportManager.addDetailedLog(this, "Error al mostrar el popup de registrar pin", await reportManager.takeScreenshot(driver, ""));
             throw err;
         }
+    });
+
+    it('click on register later button', async function() {
+        try {
+            const later = await ctrl.createElement('//android.widget.TextView[@text="Register later"]');
+            await ctrl.clickOnElement(later);
+        } catch(err) {
+            reportManager.addDetailedLog(this, "Error al hacer click en el botón de hacer click en registrar después", await reportManager.takeScreenshot(driver, ""));
+            throw err;
+        }
+    });
+
+    it('click on transacts button', async function() {
+        try {
+            const transacts = await ctrl.createElement('//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[7]');
+            reportManager.addDetailedLog(this, "Se hace click en el botón de transacciones", await reportManager.takeScreenshot(driver, ""));
+            await ctrl.clickOnElement(transacts);
+        } catch(err) {
+            reportManager.addDetailedLog(this, "Error al hacer click en el botón transacciones", await reportManager.takeScreenshot(driver, ""));
+            throw err;
+        }
+    });
+
+    it('click on transfer button', async function() {
+        try {
+            const label = await ctrl.createElement('//android.widget.TextView[@text="Multiple transfers"]');
+            const transacts = await ctrl.createElement('(//android.widget.SeekBar[@content-desc="Bottom Sheet"])[2]/android.view.ViewGroup[3]/android.view.ViewGroup');
+            if(await ctrl.waitForElement(label, 50000)) {
+                reportManager.addDetailedLog(this, "Se muestra el menú de transacciones", await reportManager.takeScreenshot(driver, ""));
+                await ctrl.clickOnElement(transacts);
+            }
+        } catch(err) {
+            reportManager.addDetailedLog(this, "Error al mostrar el menú de transacciones", await reportManager.takeScreenshot(driver, ""));
+            throw err;
+        }
+    });
+
+    it('click on transfer between own accounts', async function() {
+        try {
+            const transactsOwn = await ctrl.createElement('//android.view.ViewGroup[@content-desc="Transfer to own accounts"]');
+            if(await ctrl.waitForElement(transactsOwn, 50000)) {
+                reportManager.addDetailedLog(this, "Se hará click en el botón transferencia entre cuentas propias", await reportManager.takeScreenshot(driver, ""));
+                await ctrl.clickOnElement(transactsOwn);
+            }
+        } catch(err) {
+            reportManager.addDetailedLog(this, "Error al hacer click en el botón de transferencia entre cuentas propias", await reportManager.takeScreenshot(driver, ""));
+            throw err;
+        }
+    });
+
+    after(function() {
+        if(driver) {
+            driver.deleteSession();
+        };
     });
 });
