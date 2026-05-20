@@ -14,17 +14,23 @@ Clona este repositorio en tu máquina local utilizando el siguiente comando:
 
 ```git clone 'https://github.com/ccbAcc/auto'```
 
-## 📂 Paso 2: Estructura del proyecto
+
+## 🚀 Paso 2: Ubicar correctamente el apk
+
+Se necesita ubicar de preferencia el apk dentro de la carpeta apps, con el nombre ccb.apk, de otra forma se tendrá que modificar
+el  archivo client.js donde se tiene la config del driver.
+
+## 📂 Paso 3: Estructura del proyecto
 
 Dentro del proyecto, los casos de prueba se encuentran actualmente en la carpeta *test*.
 
-## ▶️ Paso 3: Ejecutar los tests
+## ▶️ Paso 4: Ejecutar los tests
 
 Para ejecutar los tests automatizados, utiliza el siguiente comando:
 
 ```npm run test```
 
-## 📊 Paso 4: Reportes
+## 📊 Paso 5: Reportes
 
 Los reportes de ejecución se generan automáticamente y se almacenan en la carpeta *results*.
 
