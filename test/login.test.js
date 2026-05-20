@@ -60,7 +60,7 @@ describe('login',async function () {
             await ctrl.fillElement(userInput, process.env.CCB_USERNAME);
             await ctrl.fillElement(passwordInput, process.env.CCB_PASSWORD);
             await ctrl.clickOnElement(consentOne);
-            await ctrl.clickOnElement(consentTwo); 
+            await ctrl.clickOnElement(consentTwo);
             await ctrl.clickOnElement(viewPassword);
 
             reportManager.addDetailedLog(this, "Campos llenos", await reportManager.takeScreenshot(driver, ""));
@@ -134,9 +134,67 @@ describe('login',async function () {
         }
     });
 
+    it('transactions screen', async function() {
+        try {
+            const screenLabel = await ctrl.createElement('//android.widget.TextView[@text="Transfer detail"]');
+            if(await ctrl.waitForElement(screenLabel, 50000)) {
+                reportManager.addDetailedLog(this, "Se muestra la pantalla de transferencias", await reportManager.takeScreenshot(driver, ""));
+            }
+        } catch(err) {
+            reportManager.addDetailedLog(this, "Error NO se muestra la pantalla de transferencias", await reportManager.takeScreenshot(driver, ""));
+            throw err;
+        }
+    });
+
+    it('account dropdown 1', async function() {
+        try {
+            const accountList = await ctrl.createElement('//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]');
+            const dropdown = await ctrl.createElement('(//android.view.ViewGroup[@content-desc="Select account"])[1]/android.view.ViewGroup');
+            await ctrl.clickOnElement(dropdown);
+            if(await ctrl.waitForElement(accountList, 50000)) {
+                reportManager.addDetailedLog(this, "Se muestra la lista de cuentas", await reportManager.takeScreenshot(driver, ""));
+            }
+        } catch(err) {
+            reportManager.addDetailedLog(this, "Error NO se muestra la pantalla de transferencias", await reportManager.takeScreenshot(driver, ""));
+            throw err;
+        }
+    });
+
+    it('user accounts', async function() {
+        try {
+            const jubilacion = await ctrl.createElement('//android.widget.TextView[@text="jubilación"]');
+            const planilla = await ctrl.createElement('//android.widget.TextView[@text="planilla"]');
+            const viajes = await ctrl.createElement('//android.widget.TextView[@text="viajes"]');
+            
+            const jubilacionId = await ctrl.createElement('//android.widget.TextView[@text="jubilación"]/following-sibling::android.widget.TextView');
+            const planillaId = await ctrl.createElement('//android.widget.TextView[@text="planilla"]/following-sibling::android.widget.TextView');
+            const viajesId = await ctrl.createElement('//android.widget.TextView[@text="viajes"]/following-sibling::android.widget.TextView');
+
+            const burnedjubilacionId = '4040014583';
+            const burnedplanillaId = '4020529914';
+            const burnedviajesId = '4040011911';
+
+            if(await ctrl.waitForElement(jubilacion, 5) && await ctrl.waitForElement(planilla, 5) && await ctrl.waitForElement(viajes, 5)) {
+                reportManager.addDetailedLog(this, "Se muestran las 3 cuentas del usuario: jubilación, planilla y viajes", await reportManager.takeScreenshot(driver, ""));
+            } else {
+                throw new error;
+            }
+
+            if(await jubilacionId.getText() === burnedjubilacionId && await planillaId.getText() === burnedplanillaId
+                && await viajesId.getText() === burnedviajesId) 
+            {
+                reportManager.addDetailedLog(this, "Se muestran los 3 ID del cuentas: 4040014583, 4020529914 y 4040011911", await reportManager.takeScreenshot(driver, ""));
+            } else {
+                throw new error;
+            }
+        } catch(err) {
+            reportManager.addDetailedLog(this, "Error al comprobar las cuentas del usuario", await reportManager.takeScreenshot(driver, ""));
+        }
+    });
+
     after(function() {
         if(driver) {
             driver.deleteSession();
-        };
+        }
     });
 });
