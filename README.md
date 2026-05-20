@@ -15,7 +15,7 @@ Clona este repositorio en tu máquina local utilizando el siguiente comando:
 ```git clone 'https://github.com/ccbAcc/auto'```
 
 
-## 🚀 Paso 2: Ubicar correctamente el apk
+## 🔍 Paso 2: Ubicar correctamente el apk
 
 Se necesita ubicar de preferencia el apk dentro de la carpeta apps, con el nombre ccb.apk, de otra forma se tendrá que modificar
 el  archivo client.js donde se tiene la config del driver.
